@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+{%block content%}
+<div>
+    <a href="/">Volver a la pagina principal</a>
+    <div>
+        <h1>Atributos</h1>
+        {%for a in atributo%}
+        <p>{{a.v_acidity}} - {{a.r_sugar}} - {{a.alcohol}}</p>
+        {%endfor%}
+    </div>
+    <div>
+        <h1>Calidad</h1>
+        {%for q in calidad%}
+        <p>{{q.quality}}</p>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

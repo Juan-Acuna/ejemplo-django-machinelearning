@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor de Calidad</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="head">
+        <h1 style="color: #fff;">Predictor de calidad en vinos</h1>
+    </div>
+    {%block content%}
+    {%endblock%}
+</body>
+<script>
+    //true = random; false = k-means
+console.log("iniciando programa...");
+
+var rf = document.getElementById("M1");
+var km = document.getElementById("M2");
+var rcont;
+var kcont;
+var a = document.getElementById("a");
+var b = document.getElementById("b");
+var c = document.getElementById("c");
+var acid = "";
+var sugar = "";
+var alcohol = "";
+var cargando = document.getElementById("cargando");
+var res = document.getElementById("res");
+var xhttp = new XMLHttpRequest();
+var str = "";
+
+function Gif(){
+    res.innerHTML = "";
+    cargando.style.display = "inline-block";
+}
+function CambiarBoton(si,no){
+    si.style.borderBottom = "1px #b33 solid";
+    si.style.backgroundColor = "#b33";
+    si.style.color = "#fff";
+    no.style.borderBottom = "1px #bbb solid";
+    no.style.backgroundColor = "#d7d7d7";
+    no.style.color = "#000";
+}
+function CambiarTarjeta(si,no){
+    si.style.position="absolute";
+    si.style.left="20%";
+    si.style.top="15px";
+    si.style.zIndex="2";
+    no.style.position="absolute";
+    no.style.left="21.3%";
+    no.style.top="26px";
+    no.style.zIndex="1";
+}
+function CambiarMetodo(metodo){
+    if(rcont!=null && kcont!=null){
+        if(metodo){
+            CambiarBoton(rf,km);
+            CambiarTarjeta(rcont,kcont);
+        }else{
+            CambiarBoton(km,rf);
+            CambiarTarjeta(kcont,rcont);
+        }
+    }
+}
+function Resultados(){
+    a.value = "";
+    b.value = "";
+    c.value = "";
+    str = "";
+    cargando.style.display = "none";
+    res.style.display="block";
+    res.innerHTML = xhttp.responseText;
+    rcont = document.getElementById("rc");
+    kcont = document.getElementById("kc");
+    CambiarMetodo(true);
+}
+function Limpiar(){
+    res.innerHTML = "";
+    res.style.display="none";
+    str = "";
+}
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        str = "";
+        Resultados();
+    }
+}
+function Predict(){
+    Gif();
+    acid = a.value;
+    sugar = b.value;
+    alcohol = c.value;
+    str = "a="+acid+"&b="+sugar+"&c="+alcohol;
+    xhttp.open("GET", "/predict/?"+str, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
+}
+</script>

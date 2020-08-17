@@ -1,0 +1,35 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="body">
+    <div class="izq">
+        <h3 style="margin-bottom: 1%;">Variables influyentes</h3>
+        <hr style="width: 100%;margin: 0% 0% 25% 0%;">
+        <label>Ingrese 'volatile acidity'</label>
+        <input type="number" id="a" onclick="Limpiar()">
+        <br>
+        <label>Ingrese 'residual sugar'</label>
+        <input type="number" id="b" onclick="Limpiar()">
+        <br>
+        <label>Ingrese 'alcohol'</label>
+        <input type="number" id="c" onclick="Limpiar()">
+        <br>
+        <br>
+        <button class="boton" onclick="Predict()">Ejecutar prediccion</button>
+    </div>
+    <div class="der">
+        <div class="t-pred">
+            <h2 style="margin:0%;margin-bottom:2%;">Resultados de la predicción</h2>
+            <b>Esta aplicacion predice la calidad de un vino de 1 a 8 según tres atributos importantes de este
+            a travez de un algoritmo llamado 'Random Forest'.</b>
+            <p style="margin:0%;margin-bottom:1%;">Tambien ofrecemos la opción de usar Aprendizaje no supervisado, pero este clasifica en valores aleatorios.</p>
+            <div>
+                <button id="M1" class="metodo" style="padding-left: 2%;" onclick="CambiarMetodo(true)">Aprendizaje supervisado (Random Forest)</button>
+                <button id="M2" class="metodo" style="padding-right: 2%;" onclick="CambiarMetodo(false)">Aprendizaje no supervisado (K-Means)</button>
+            </div>
+        </div>
+        <img src="/static/img/cargando.gif" alt="Cargando" id="cargando" style="display: none;margin-top:1%;">
+        <div id='res'class='pred'>  
+        </div>
+    </div>
+</div>
+{%endblock%}
